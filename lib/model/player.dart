@@ -1,7 +1,7 @@
 class Player {
   String firstName;
   String lastName;
-  int number;
+  String number;
   Line line;
   Pod pod;
 

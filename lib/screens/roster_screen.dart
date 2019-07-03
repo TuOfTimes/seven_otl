@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:seven_otl/model/player.dart';
+
+
 class FirstTab extends StatelessWidget {
   final double _smallFontSize = 12;
   final double _valFontSize = 30;
@@ -16,51 +19,51 @@ class FirstTab extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           // ontap to specify tap behavior
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "SUNDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "MONDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "TUESDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "WEDNESDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "THURSDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "FRIDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "SATURDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "SATURDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "SATURDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "SATURDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "SATURDAY"),
-          RecordItem(
+          RosterEntry(
               fontColor: _fontColor,
               smallFontSpacing: _smallFontSpacing,
               day: "SATURDAY"),
@@ -70,8 +73,8 @@ class FirstTab extends StatelessWidget {
   }
 }
 
-class RecordItem extends StatelessWidget {
-  const RecordItem({
+class RosterEntry extends StatelessWidget {
+  const RosterEntry({
     Key key,
     @required Color fontColor,
     @required double smallFontSpacing,
@@ -134,4 +137,19 @@ class RecordItem extends StatelessWidget {
       ),
     );
   }
+}
+
+List getPlayers() {
+  return [
+    Player(
+      firstName: "Edward",
+      lastName: "Tu",
+      number: 2
+    ),
+    Player(
+      firstName: "Albert",
+      lastName: "Kragl",
+      number: 47
+    ),      
+  ];
 }

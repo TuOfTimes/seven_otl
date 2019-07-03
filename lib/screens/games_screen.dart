@@ -40,32 +40,21 @@ class _ListPageState extends State<ListPage> {
             decoration: new BoxDecoration(
                 border: new Border(
                     right: new BorderSide(width: 1.0, color: Colors.white24))),
-            child: Text('W'),
+            child: Text(game.getResultLetter()),
           ),
 
           // title should specify score
           title: Text(
-            game.opponent,
+            "vs. " + game.opponent,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
 
           subtitle: Row(
             children: <Widget>[
-              // progress bar - probably not needed
-
-              // Expanded(
-              //     flex: 1,
-              //     child: Container(
-              //       // tag: 'hero',
-              //       child: LinearProgressIndicator(
-              //           backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
-              //           value: game.indicatorValue,
-              //           valueColor: AlwaysStoppedAnimation(Colors.green)),
-              //     )),
               Expanded(
                 flex: 4,
-                child: Text(game.teamScore.toString(),
+                child: Text(game.teamScore.toString() + " - " + game.opponentScore.toString(),
                         style: TextStyle(color: Colors.white))),
             ],
           ),

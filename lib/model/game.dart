@@ -5,8 +5,12 @@ class Game {
   int teamScore;
   int opponentScore;
 
-
-  Game({this.dateTime, this.opponent, this.result=Result.unfinished, this.teamScore=0, this.opponentScore=0});
+  Game(
+      {this.dateTime,
+      this.opponent,
+      this.result = Result.unfinished,
+      this.teamScore = 0,
+      this.opponentScore = 0});
 
   String getResultLetter() {
     switch (this.result) {
@@ -24,6 +28,4 @@ class Game {
   }
 }
 
-enum Result {
-  win, loss, tie, unfinished
-}
+enum Result { win, loss, tie, unfinished }

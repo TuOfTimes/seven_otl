@@ -31,8 +31,8 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     ListTile makeListTile(Game game) => ListTile(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          // contentPadding:
+          //     EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           // use this to specify win (W) or loss (L)
 
           leading: Container(
@@ -40,7 +40,12 @@ class _ListPageState extends State<ListPage> {
             decoration: new BoxDecoration(
                 border: new Border(
                     right: new BorderSide(width: 1.0, color: Colors.white24))),
-            child: Text(game.getResultLetter()),
+            child: Text(game.getResultLetter(),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    fontFamily: 'RobotoMono')),
           ),
 
           // title should specify score
@@ -53,18 +58,19 @@ class _ListPageState extends State<ListPage> {
           subtitle: Row(
             children: <Widget>[
               Expanded(
-                flex: 4,
-                child: Text(game.teamScore.toString() + " - " + game.opponentScore.toString(),
-                        style: TextStyle(color: Colors.white))),
+                  flex: 4,
+                  child: Text(
+                      game.teamScore.toString() +
+                          " - " +
+                          game.opponentScore.toString(),
+                      style: TextStyle(color: Colors.white))),
             ],
           ),
           trailing:
               Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DetailPage()));
+                context, MaterialPageRoute(builder: (context) => DetailPage()));
           },
         );
 
@@ -78,27 +84,24 @@ class _ListPageState extends State<ListPage> {
         );
 
     final makeBody = Container(
-      // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
-      child: Column(
-        children: <Widget>[
-          // Text(
-          //   widget.title,
-          //   style: TextStyle(
-          //     color: Colors.grey,
-          //     fontWeight: FontWeight.bold,
-          //     fontSize: 25),
-          //   ),
-          ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: games.length,
-            itemBuilder: (BuildContext context, int index) {
-              return makeCard(games[index]);
-            },
-          ),
-        ]
-      )
-    );
+        // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
+        child: Column(children: <Widget>[
+      // Text(
+      //   widget.title,
+      //   style: TextStyle(
+      //     color: Colors.grey,
+      //     fontWeight: FontWeight.bold,
+      //     fontSize: 25),
+      //   ),
+      ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: games.length,
+        itemBuilder: (BuildContext context, int index) {
+          return makeCard(games[index]);
+        },
+      ),
+    ]));
 
     return makeBody;
   }
@@ -115,10 +118,17 @@ List getGames() {
     ),
     Game(
       dateTime: DateTime.now(),
+      opponent: "League of Shadows",
+      result: Result.loss,
+      teamScore: 10,
+      opponentScore: 13,
+    ),
+    Game(
+      dateTime: DateTime.now(),
       opponent: "Queens",
       result: Result.unfinished,
       teamScore: 8,
       opponentScore: 7,
     )
-    ];
+  ];
 }

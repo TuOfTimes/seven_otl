@@ -52,7 +52,7 @@ class _ListPageState extends State<ListPage> {
           children: <Widget>[
             Expanded(
                 flex: 4,
-                child: Text(player.getLine() + " " + player.getPosition(),
+                child: Text(player.getLine() + " - " + player.getPosition(),
                     style: TextStyle(color: Colors.black))),
           ],
         ),
@@ -66,19 +66,54 @@ class _ListPageState extends State<ListPage> {
           elevation: 1,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
-            decoration: BoxDecoration(color: Colors.transparent),
-            child: makeListTile(player),
+              decoration: BoxDecoration(color: Colors.transparent),
+              child: makeListTile(player)),
+        );
+
+    Card makeNewPlayerCard() => Card(
+          elevation: 1,
+          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          child: Container(
+            decoration: BoxDecoration(color: Colors.grey[300]),
+            child: ListTile(
+                leading: Container(
+                  child: Text("+",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17)),
+                ),
+
+                // title should specify score
+                title: Text(
+                  "Add Player",
+                  style: TextStyle(color: Colors.black, fontSize: 17),
+                ),
+                // subtitle: Row(
+                //   children: <Widget>[
+                //     Expanded(
+                //         flex: 4,
+                //         child: Text("Line - Position",
+                //             style: TextStyle(color: Colors.black))),
+                //   ],
+                // ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => DetailPage()));
+                },
+                dense: true),
           ),
         );
 
     final makeBody = Container(
-      // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
+      alignment: Alignment(0, -1),
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: players.length,
+        itemCount: players.length + 1,
         itemBuilder: (BuildContext context, int index) {
-          return makeCard(players[index]);
+          if (index < players.length) return makeCard(players[index]);
+          return makeNewPlayerCard();
         },
       ),
     );

@@ -39,10 +39,11 @@ class _ListPageState extends State<ListPage> {
             padding: EdgeInsets.only(right: 12.0),
             decoration: new BoxDecoration(
                 border: new Border(
-                    right: new BorderSide(width: 1.0, color: Colors.white24))),
+                    right:
+                        new BorderSide(width: 1.0, color: Colors.grey[500]))),
             child: Text(game.getResultLetter(),
                 style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey[800],
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                     fontFamily: 'RobotoMono')),
@@ -51,9 +52,10 @@ class _ListPageState extends State<ListPage> {
           // title should specify score
           title: Text(
             "vs. " + game.opponent,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style:
+                TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold),
           ),
-          // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+          // subtitle: Text("Intermediate", style: TextStyle(color: Colors.grey[800])),
 
           subtitle: Row(
             children: <Widget>[
@@ -63,11 +65,11 @@ class _ListPageState extends State<ListPage> {
                       game.teamScore.toString() +
                           " - " +
                           game.opponentScore.toString(),
-                      style: TextStyle(color: Colors.white))),
+                      style: TextStyle(color: Colors.grey[800]))),
             ],
           ),
-          trailing:
-              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+          trailing: Icon(Icons.keyboard_arrow_right,
+              color: Colors.grey[800], size: 30.0),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => DetailPage()));
@@ -78,30 +80,59 @@ class _ListPageState extends State<ListPage> {
           elevation: 5.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
-            decoration: BoxDecoration(color: Colors.grey),
+            decoration: BoxDecoration(color: Colors.transparent),
             child: makeListTile(game),
           ),
         );
 
+    Card makeNewGameCard() => Card(
+        elevation: 1,
+        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        child: Container(
+            decoration: BoxDecoration(color: Colors.grey[300]),
+            child: ListTile(
+              leading: Container(
+                padding: EdgeInsets.only(right: 12.0),
+                decoration: new BoxDecoration(
+                    border: new Border(
+                        right: new BorderSide(
+                            width: 1.0, color: Colors.grey[500]))),
+                child: Text("+",
+                    style: TextStyle(
+                        color: Colors.grey[800],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        fontFamily: 'RobotoMono')),
+              ),
+
+              // title should specify score
+              title: Text(
+                "New Game",
+                style: TextStyle(
+                    color: Colors.grey[800], fontWeight: FontWeight.bold),
+              ),
+              // subtitle:
+              //     Text("0 - 0", style: TextStyle(color: Colors.grey[800])),
+              trailing: Icon(Icons.keyboard_arrow_right,
+                  color: Colors.grey[800], size: 30.0),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DetailPage()));
+              },
+            )));
+
     final makeBody = Container(
-        // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
-        child: Column(children: <Widget>[
-      // Text(
-      //   widget.title,
-      //   style: TextStyle(
-      //     color: Colors.grey,
-      //     fontWeight: FontWeight.bold,
-      //     fontSize: 25),
-      //   ),
-      ListView.builder(
+      alignment: Alignment(0, -1),
+      child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: games.length,
+        itemCount: games.length + 1,
         itemBuilder: (BuildContext context, int index) {
-          return makeCard(games[index]);
+          if (index == 0) return makeNewGameCard();
+          return makeCard(games[index - 1]);
         },
       ),
-    ]));
+    );
 
     return makeBody;
   }

@@ -19,7 +19,7 @@ class Game {
       case Result.loss:
         return "L";
       case Result.unfinished:
-        return "-";
+        return "I";
       case Result.tie:
         return "T";
       default:

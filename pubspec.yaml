@@ -23,6 +23,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  intl: 
 
 dev_dependencies:
   flutter_test:
@@ -70,11 +71,17 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/profile.png
+
   fonts:
     - family: RobotoMono
       fonts:
-        - asset: fonts/Roboto_Mono/RobotoMono-Regular.ttf
-        - asset: fonts/Roboto_Mono/RobotoMono-Bold.ttf
+        - asset: assets/RobotoMono/RobotoMono-Regular.ttf
+        - asset: assets/RobotoMono/RobotoMono-Bold.ttf
           weight: 700
-        - asset: fonts/Roboto_Mono/RobotoMono-Italic.ttf
+        - asset: assets/RobotoMono/RobotoMono-Italic.ttf
           style: italic
+    - family:  FrisbeeIcon
+      fonts:
+       - asset: assets/FrisbeeIcon/FrisbeeIcon.ttf

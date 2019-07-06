@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:seven_otl/model/player.dart';
-import 'package:seven_otl/screens/detail_page.dart';
+import 'package:seven_otl/screens/playerDetail.dart';
 
-class FirstTab extends StatelessWidget {
+class PlayerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListPage(title: 'MUT 2019 Playerss');
@@ -58,7 +58,11 @@ class _ListPageState extends State<ListPage> {
         ),
         onTap: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => DetailPage()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PlayerDetailPage(
+                        player: player,
+                      )));
         },
         dense: true);
 
@@ -98,8 +102,10 @@ class _ListPageState extends State<ListPage> {
                 //   ],
                 // ),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => DetailPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PlayerDetailPage()));
                 },
                 dense: true),
           ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'screens/roster.dart';
-import 'screens/games.dart';
+import 'package:seven_otl/frisbeeIcon.dart';
+import 'screens/playerList.dart';
+import 'screens/gameList.dart';
+import 'screens/teamInfo.dart';
 
 void main() => runApp(new MyApp());
 
@@ -14,12 +16,12 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new AppClock(),
+      home: new SevenOTL(),
     );
   }
 }
 
-class AppClock extends StatelessWidget {
+class SevenOTL extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,16 +57,17 @@ class AppClock extends StatelessWidget {
                                 tabs: [
                                   Tab(
                                     text: "ROSTER",
-                                    icon: Icon(Icons.menu, size: 40),
-                                  ),
-                                  Tab(
-                                    text: "MUT 2019",
                                     icon: Icon(Icons.supervised_user_circle,
                                         size: 40),
                                   ),
                                   Tab(
+                                    text: "MANAGE",
+                                    icon: Icon(Icons.assessment, size: 40),
+                                  ),
+                                  Tab(
                                     text: "GAMES",
-                                    icon: Icon(Icons.menu, size: 40),
+                                    icon:
+                                        Icon(FrisbeeIcon.big_frisbee, size: 40),
                                   ),
                                 ])
                           ],
@@ -76,11 +79,13 @@ class AppClock extends StatelessWidget {
                 body: TabBarView(
                   children: <Widget>[
                     Center(
-                      child: FirstTab(),
+                      child: PlayerList(),
                     ),
-                    Text("Third Screen"),
                     Center(
-                      child: SecondTab(),
+                      child: TeamInfo(),
+                    ),
+                    Center(
+                      child: GameList(),
                     ),
                   ],
                 ))));

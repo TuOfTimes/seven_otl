@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:seven_otl/model/game.dart';
-import 'package:seven_otl/screens/detail_page.dart';
+import 'package:seven_otl/screens/gameDetail.dart';
 
-class SecondTab extends StatelessWidget {
+class GameList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListPage(title: 'MUT 2019 Games');
@@ -72,7 +72,9 @@ class _ListPageState extends State<ListPage> {
               color: Colors.grey[800], size: 30.0),
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => DetailPage()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GameDetailPage(game: game)));
           },
         );
 
@@ -117,7 +119,7 @@ class _ListPageState extends State<ListPage> {
                   color: Colors.grey[800], size: 30.0),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DetailPage()));
+                    MaterialPageRoute(builder: (context) => GameDetailPage()));
               },
             )));
 

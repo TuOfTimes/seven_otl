@@ -26,6 +26,21 @@ class Game {
         return "";
     }
   }
+
+  String getResult() {
+    switch (this.result) {
+      case Result.win:
+        return "Win";
+      case Result.loss:
+        return "Loss";
+      case Result.unfinished:
+        return "Incomplete";
+      case Result.tie:
+        return "Tie";
+      default:
+        return "";
+    }
+  }
 }
 
 enum Result { win, loss, tie, unfinished }

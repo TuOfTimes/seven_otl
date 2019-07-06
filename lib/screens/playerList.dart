@@ -22,21 +22,18 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  List players;
-
   @override
   void initState() {
-    players = getPlayers();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    ListTile makeListTile(Player player) => ListTile(
+    ListTile makeListTile(DocumentSnapshot document) => ListTile(
         // use this to specify win (W) or loss (L)
 
         leading: Container(
-          child: Text(player.number,
+          child: Text(document['number'].toString(),
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -45,7 +42,7 @@ class _ListPageState extends State<ListPage> {
 
         // title should specify score
         title: Text(
-          player.firstName + " " + player.lastName,
+          document['name'],
           style: TextStyle(color: Colors.black, fontSize: 17),
         ),
         // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
@@ -54,7 +51,7 @@ class _ListPageState extends State<ListPage> {
           children: <Widget>[
             Expanded(
                 flex: 4,
-                child: Text(player.getLine() + " - " + player.getPosition(),
+                child: Text(document['line'] + " - " + document['position'],
                     style: TextStyle(color: Colors.black))),
           ],
         ),
@@ -63,17 +60,17 @@ class _ListPageState extends State<ListPage> {
               context,
               MaterialPageRoute(
                   builder: (context) => PlayerDetailPage(
-                        player: player,
+                        document: document,
                       )));
         },
         dense: true);
 
-    Card makeCard(Player player) => Card(
+    Card makeCard(BuildContext context, DocumentSnapshot document) => Card(
           elevation: 1,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
               decoration: BoxDecoration(color: Colors.transparent),
-              child: makeListTile(player)),
+              child: makeListTile(document)),
         );
 
     Card makeNewPlayerCard() => Card(
@@ -112,149 +109,23 @@ class _ListPageState extends State<ListPage> {
         );
 
     final makeBody = Container(
-      alignment: Alignment(0, -1),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: players.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index < players.length) return makeCard(players[index]);
-          return makeNewPlayerCard();
-        },
-      ),
-    );
+        alignment: Alignment(0, -1),
+        child: StreamBuilder(
+            stream: Firestore.instance.collection('players').snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return const Text('Loading...');
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: snapshot.data.documents.length + 1,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index < snapshot.data.documents.length)
+                    return makeCard(context, snapshot.data.documents[index]);
+                  return makeNewPlayerCard();
+                },
+              );
+            }));
 
     return makeBody;
   }
-}
-
-List getPlayers() {
-  return [
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Edward",
-        lastName: "Tu",
-        number: "2"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Thomas",
-        lastName: "Griffin",
-        number: "3"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Thomas",
-        lastName: "McAlear",
-        number: "4"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Paul",
-        lastName: "Hooley",
-        number: "6"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Elias",
-        lastName: "Hess-Childs",
-        number: "7"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Gabriel",
-        lastName: "Gefter",
-        number: "8"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Hayden",
-        lastName: "Stone",
-        number: "14"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Christos",
-        lastName: "Cunning",
-        number: "15"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Thomas",
-        lastName: "Ronson",
-        number: "23"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Vincent",
-        lastName: "Lee",
-        number: "24"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Thomas",
-        lastName: "Wright",
-        number: "26"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Jack",
-        lastName: "Eagles",
-        number: "27"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Jordan",
-        lastName: "Faries",
-        number: "28"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Brenden",
-        lastName: "Kadota",
-        number: "33"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Calvin",
-        lastName: "Coulbury",
-        number: "37"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Christophe",
-        lastName: "Tremblay-Joncas",
-        number: "44"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Albert",
-        lastName: "Kragl",
-        number: "47"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Angus",
-        lastName: "Boswell",
-        number: "50"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Adam",
-        lastName: "Gosselin",
-        number: "50"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Elliot",
-        lastName: "Wong",
-        number: "60"),
-    Player(
-        line: Line.offense,
-        position: Position.handler,
-        firstName: "Timmy",
-        lastName: "Woo",
-        number: "71"),
-  ];
 }

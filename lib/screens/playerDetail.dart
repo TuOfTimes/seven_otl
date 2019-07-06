@@ -1,9 +1,9 @@
-import 'package:seven_otl/model/player.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class PlayerDetailPage extends StatelessWidget {
-  final Player player;
-  PlayerDetailPage({Key key, this.player}) : super(key: key);
+  final DocumentSnapshot document;
+  PlayerDetailPage({Key key, this.document}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final button = PopupMenuButton<Options>(
@@ -55,7 +55,7 @@ class PlayerDetailPage extends StatelessWidget {
                         ])),
                 SizedBox(height: 60.0),
                 Text(
-                  player.number,
+                  document['number'].toString(),
                   style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
@@ -63,7 +63,7 @@ class PlayerDetailPage extends StatelessWidget {
                 ),
                 SizedBox(height: 15.0),
                 Text(
-                  player.firstName + " " + player.lastName,
+                  document['name'],
                   style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
@@ -71,12 +71,7 @@ class PlayerDetailPage extends StatelessWidget {
                 ),
                 SizedBox(height: 15.0),
                 Text(
-                  player.getLine() + " " + player.getPosition(),
-                  style: TextStyle(fontSize: 17.0),
-                ),
-                SizedBox(height: 15.0),
-                Text(
-                  player.getPod(),
+                  document['line'] + " " + document['position'],
                   style: TextStyle(fontSize: 17.0),
                 ),
               ],

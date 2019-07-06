@@ -119,8 +119,12 @@ class _ListPageState extends State<ListPage> {
                 shrinkWrap: true,
                 itemCount: snapshot.data.documents.length + 1,
                 itemBuilder: (BuildContext context, int index) {
+                  List list = snapshot.data.documents.toList();
+                  list.sort((a, b) {
+                    return a['number'].compareTo(b['number']);
+                  });
                   if (index < snapshot.data.documents.length)
-                    return makeCard(context, snapshot.data.documents[index]);
+                    return makeCard(context, list[index]);
                   return makeNewPlayerCard();
                 },
               );

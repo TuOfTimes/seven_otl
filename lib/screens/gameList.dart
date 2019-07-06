@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:seven_otl/model/game.dart';
 import 'package:seven_otl/screens/gameDetail.dart';
 import 'package:seven_otl/screens/newGame.dart';
 
@@ -21,17 +21,14 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  List games;
-
   @override
   void initState() {
-    games = getGames();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    ListTile makeListTile(Game game) => ListTile(
+    ListTile makeListTile(DocumentSnapshot document) => ListTile(
           // contentPadding:
           //     EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           // use this to specify win (W) or loss (L)
@@ -42,7 +39,7 @@ class _ListPageState extends State<ListPage> {
                 border: new Border(
                     right:
                         new BorderSide(width: 1.0, color: Colors.grey[500]))),
-            child: Text(game.getResultLetter(),
+            child: Text('W',
                 style: TextStyle(
                     color: Colors.grey[800],
                     fontWeight: FontWeight.bold,
@@ -52,7 +49,7 @@ class _ListPageState extends State<ListPage> {
 
           // title should specify score
           title: Text(
-            "vs. " + game.opponent,
+            "vs. " + document['awayTeam'],
             style:
                 TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold),
           ),
@@ -63,9 +60,9 @@ class _ListPageState extends State<ListPage> {
               Expanded(
                   flex: 4,
                   child: Text(
-                      game.teamScore.toString() +
+                      document['homeScore'].toString() +
                           " - " +
-                          game.opponentScore.toString(),
+                          document['awayScore'].toString(),
                       style: TextStyle(color: Colors.grey[800]))),
             ],
           ),
@@ -75,16 +72,16 @@ class _ListPageState extends State<ListPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => GameDetailPage(game: game)));
+                    builder: (context) => GameDetailPage(document: document)));
           },
         );
 
-    Card makeCard(Game game) => Card(
+    Card makeCard(BuildContext context, DocumentSnapshot document) => Card(
           elevation: 5.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
             decoration: BoxDecoration(color: Colors.transparent),
-            child: makeListTile(game),
+            child: makeListTile(document),
           ),
         );
 
@@ -125,44 +122,26 @@ class _ListPageState extends State<ListPage> {
             )));
 
     final makeBody = Container(
-      alignment: Alignment(0, -1),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: games.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) return makeNewGameCard();
-          return makeCard(games[index - 1]);
-        },
-      ),
-    );
+        alignment: Alignment(0, -1),
+        child: StreamBuilder(
+            stream: Firestore.instance.collection('games').snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return const Text('Loading...');
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: snapshot.data.documents.length + 1,
+                itemBuilder: (BuildContext context, int index) {
+                  List list = snapshot.data.documents.toList();
+                  list.sort((a, b) {
+                    return b['time'].compareTo(a['time']);
+                  });
+                  if (index == 0) return makeNewGameCard();
+                  return makeCard(context, list[index - 1]);
+                },
+              );
+            }));
 
     return makeBody;
   }
-}
-
-List getGames() {
-  return [
-    Game(
-      dateTime: DateTime.now(),
-      opponent: "Western",
-      result: Result.win,
-      teamScore: 15,
-      opponentScore: 7,
-    ),
-    Game(
-      dateTime: DateTime.now(),
-      opponent: "League of Shadows",
-      result: Result.loss,
-      teamScore: 10,
-      opponentScore: 13,
-    ),
-    Game(
-      dateTime: DateTime.now(),
-      opponent: "Queens",
-      result: Result.unfinished,
-      teamScore: 8,
-      opponentScore: 7,
-    )
-  ];
 }

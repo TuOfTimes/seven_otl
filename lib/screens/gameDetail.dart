@@ -1,12 +1,12 @@
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:seven_otl/model/game.dart';
 import 'package:flutter/material.dart';
 
 class GameDetailPage extends StatelessWidget {
-  final Game game;
+  final DocumentSnapshot document;
   final DateFormat date = new DateFormat("yyyy-MM-dd");
-  GameDetailPage({Key key, this.game}) : super(key: key);
+  GameDetailPage({Key key, this.document}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final button = PopupMenuButton<Options>(
@@ -46,7 +46,8 @@ class GameDetailPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  date.format(game.dateTime),
+                  date.format(new DateTime.fromMillisecondsSinceEpoch(
+                      document['time'].millisecondsSinceEpoch)),
                   style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
@@ -54,7 +55,9 @@ class GameDetailPage extends StatelessWidget {
                 ),
                 SizedBox(height: 15.0),
                 Text(
-                  game.getResult() + " vs. " + game.opponent,
+                  document['complete'].toString() +
+                      " vs. " +
+                      document['awayTeam'],
                   style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
@@ -62,9 +65,9 @@ class GameDetailPage extends StatelessWidget {
                 ),
                 SizedBox(height: 15.0),
                 Text(
-                  game.teamScore.toString() +
+                  document['homeScore'].toString() +
                       " - " +
-                      game.opponentScore.toString(),
+                      document['awayScore'].toString(),
                   style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,

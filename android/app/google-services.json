@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "248451996659",
+    "firebase_url": "https://sevenotl.firebaseio.com",
+    "project_id": "sevenotl",
+    "storage_bucket": "sevenotl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248451996659:android:ffe66851923f23df",
+        "android_client_info": {
+          "package_name": "com.example.seven_otl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248451996659-d0ujncblmqcuomnjih93o5192bdjrjtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6Ag_vrTnQmSvprBoOo5Vl1ezbym4jzMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248451996659-d0ujncblmqcuomnjih93o5192bdjrjtc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

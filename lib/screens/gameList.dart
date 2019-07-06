@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:seven_otl/model/game.dart';
 import 'package:seven_otl/screens/gameDetail.dart';
+import 'package:seven_otl/screens/newGame.dart';
 
 class GameList extends StatelessWidget {
   @override
@@ -119,7 +120,7 @@ class _ListPageState extends State<ListPage> {
                   color: Colors.grey[800], size: 30.0),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => GameDetailPage()));
+                    MaterialPageRoute(builder: (context) => NewGame()));
               },
             )));
 

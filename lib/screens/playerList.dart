@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:seven_otl/model/player.dart';
+import 'package:seven_otl/screens/newPlayer.dart';
 import 'package:seven_otl/screens/playerDetail.dart';
 
 class PlayerList extends StatelessWidget {
@@ -102,10 +104,8 @@ class _ListPageState extends State<ListPage> {
                 //   ],
                 // ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PlayerDetailPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewPlayer()));
                 },
                 dense: true),
           ),
